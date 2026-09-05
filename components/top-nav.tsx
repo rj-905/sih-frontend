@@ -2,8 +2,9 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ScanLine, LayoutDashboard, MessageSquare, Boxes } from 'lucide-react'
+import { ScanLine, LayoutDashboard, MessageSquare, Boxes, ShoppingCart } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useCart } from '@/components/cart-context'
 
 const NAV = [
   { href: '/checkout', label: 'Checkout', icon: ScanLine },
@@ -14,6 +15,7 @@ const NAV = [
 
 export function TopNav() {
   const pathname = usePathname()
+  const { count, setOpen } = useCart()
 
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur supports-[backdrop-filter]:bg-zinc-950/60">
@@ -55,7 +57,7 @@ export function TopNav() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
-          <span className="flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900 px-2.5 py-1">
+          <span className="hidden items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900 px-2.5 py-1 lg:flex">
             <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
             <span className="font-mono text-[11px] text-zinc-400">
               Edge node online
@@ -64,6 +66,19 @@ export function TopNav() {
           <span className="hidden font-mono text-xs text-zinc-500 md:inline">
             Store #IN-042
           </span>
+          <button
+            onClick={() => setOpen(true)}
+            aria-label={`Open cart, ${count} item${count === 1 ? '' : 's'}`}
+            className="relative flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-sm font-medium text-zinc-200 transition-colors hover:border-zinc-700 hover:bg-zinc-800"
+          >
+            <ShoppingCart className="size-4" />
+            <span className="hidden sm:inline">Cart</span>
+            {count > 0 && (
+              <span className="flex min-w-5 items-center justify-center rounded-full bg-emerald-500 px-1 font-mono text-[11px] font-semibold text-zinc-950">
+                {count}
+              </span>
+            )}
+          </button>
         </div>
       </div>
     </header>

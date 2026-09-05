@@ -13,6 +13,7 @@ export type Product = {
   price: number
   stock: number
   aisle: string
+  image: string
 }
 
 export const CATEGORIES: Category[] = [
@@ -32,6 +33,7 @@ export const PRODUCTS: Product[] = [
     price: 14,
     stock: 48,
     aisle: 'Aisle 3 - Bay A',
+    image: '/products/sku-1001.png',
   },
   {
     id: 'SKU-1002',
@@ -41,6 +43,7 @@ export const PRODUCTS: Product[] = [
     price: 72,
     stock: 6,
     aisle: 'Aisle 5 - Bay B',
+    image: '/products/sku-1002.png',
   },
   {
     id: 'SKU-1003',
@@ -50,6 +53,7 @@ export const PRODUCTS: Product[] = [
     price: 20,
     stock: 32,
     aisle: 'Aisle 2 - Bay C',
+    image: '/products/sku-1003.png',
   },
   {
     id: 'SKU-1004',
@@ -59,6 +63,7 @@ export const PRODUCTS: Product[] = [
     price: 40,
     stock: 60,
     aisle: 'Aisle 1 - Bay A',
+    image: '/products/sku-1004.png',
   },
   {
     id: 'SKU-1005',
@@ -68,6 +73,7 @@ export const PRODUCTS: Product[] = [
     price: 55,
     stock: 9,
     aisle: 'Aisle 5 - Bay A',
+    image: '/products/sku-1005.png',
   },
   {
     id: 'SKU-1006',
@@ -77,6 +83,7 @@ export const PRODUCTS: Product[] = [
     price: 20,
     stock: 25,
     aisle: 'Aisle 2 - Bay D',
+    image: '/products/sku-1006.png',
   },
   {
     id: 'SKU-1007',
@@ -86,6 +93,7 @@ export const PRODUCTS: Product[] = [
     price: 40,
     stock: 44,
     aisle: 'Aisle 1 - Bay B',
+    image: '/products/sku-1007.png',
   },
   {
     id: 'SKU-1008',
@@ -95,6 +103,7 @@ export const PRODUCTS: Product[] = [
     price: 30,
     stock: 18,
     aisle: 'Aisle 2 - Bay A',
+    image: '/products/sku-1008.png',
   },
   {
     id: 'SKU-1009',
@@ -104,6 +113,7 @@ export const PRODUCTS: Product[] = [
     price: 135,
     stock: 12,
     aisle: 'Aisle 1 - Bay D',
+    image: '/products/sku-1009.png',
   },
   {
     id: 'SKU-1010',
@@ -113,6 +123,7 @@ export const PRODUCTS: Product[] = [
     price: 50,
     stock: 8,
     aisle: 'Aisle 6 - Bay A',
+    image: '/products/sku-1010.png',
   },
   {
     id: 'SKU-1011',
@@ -122,6 +133,7 @@ export const PRODUCTS: Product[] = [
     price: 35,
     stock: 40,
     aisle: 'Aisle 6 - Bay B',
+    image: '/products/sku-1011.png',
   },
   {
     id: 'SKU-1012',
@@ -131,6 +143,7 @@ export const PRODUCTS: Product[] = [
     price: 15,
     stock: 10,
     aisle: 'Aisle 3 - Bay B',
+    image: '/products/sku-1012.png',
   },
 ]
 
@@ -142,6 +155,40 @@ export function formatINR(value: number): string {
 
 export function productById(id: string): Product | undefined {
   return PRODUCTS.find((p) => p.id === id)
+}
+
+/* ---------- Frequently bought combos (customer assistant) ---------- */
+
+export type Combo = {
+  id: string
+  title: string
+  reason: string
+  productIds: string[]
+}
+
+export const COMBOS: Combo[] = [
+  {
+    id: 'combo-chai',
+    title: 'Evening Chai Break',
+    reason: 'Bought together by 8 of 10 shoppers buying tea',
+    productIds: ['SKU-1009', 'SKU-1002', 'SKU-1008'],
+  },
+  {
+    id: 'combo-latenight',
+    title: 'Late-Night Snack Run',
+    reason: 'Popular after 9 PM near the campus store',
+    productIds: ['SKU-1001', 'SKU-1003', 'SKU-1004'],
+  },
+  {
+    id: 'combo-breakfast',
+    title: 'Quick Breakfast Basket',
+    reason: 'Frequently reordered on weekday mornings',
+    productIds: ['SKU-1002', 'SKU-1005', 'SKU-1010'],
+  },
+]
+
+export function comboTotal(combo: Combo): number {
+  return combo.productIds.reduce((sum, id) => sum + (productById(id)?.price ?? 0), 0)
 }
 
 /* ---------- Analytics mock data ---------- */

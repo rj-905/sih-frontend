@@ -184,3 +184,56 @@
 .animate-scan {
   animation: scan-sweep 1.4s ease-in-out infinite;
 }
+
+/* Vending machine: product falls from the coil */
+@keyframes vend-drop {
+  0% {
+    transform: translateY(-160%) rotate(-4deg);
+    opacity: 0;
+  }
+  55% {
+    transform: translateY(8%) rotate(2deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-4%) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-vend-drop {
+  animation: vend-drop 0.85s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+}
+
+/* Vending machine: coil spring rotating while dispensing / buffering */
+@keyframes coil-turn {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 22px 0;
+  }
+}
+
+.coil {
+  background-image: repeating-linear-gradient(
+    72deg,
+    #18181b 0px,
+    #3f3f46 3px,
+    #a1a1aa 5px,
+    #d4d4d8 6px,
+    #71717a 8px,
+    #27272a 11px
+  );
+  background-size: 22px 100%;
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.12),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.55);
+}
+
+.coil-spin {
+  animation: coil-turn 0.5s linear infinite;
+}
